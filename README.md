@@ -31,17 +31,17 @@ An intelligent data cleaning and quality assurance agent built with LangGraph. F
        │ cleaning_plan
        ▼
 ┌─────────────┐
-│   Coder     │◀────────────────────────┐
-│    Node     │               			│
-└──────┬──────┘               			│
-       │ generated_code       			│
-       ▼                      			│
-┌─────────────┐               			│ execution_error
-│  Executor   │               			│
-│    Node     │               			│
-└──────┬──────┘               			│
-       │                		retry_count < 3 
-       │                      			│
+│   Coder     │◀───────────────────────┐
+│    Node     │               			    │
+└──────┬──────┘               			    │
+       │ generated_code       			    │
+       ▼                      			    │
+┌─────────────┐               		execution_error
+│  Executor   │               			    │
+│    Node     │               			    │
+└──────┬──────┘               			    │
+       │                		      retry_count < 3 
+       │                      			    │
        ├────────────────────────────────┘
        │
        ├────────────────────────────────┐
@@ -51,19 +51,19 @@ An intelligent data cleaning and quality assurance agent built with LangGraph. F
        ▼                                │
 ┌─────────────┐                         │
 │     QA      │                         │
-│    Node     │							│
-└──────┬──────┘							│
-       │								│
-       ├─────────────────────┐			│
-       │                     │			│
-   qa_passed            qa_failed		│
-       │                     │			│
-       ▼                     │			│
-┌─────────────┐              │			│
-│     EDA     │              │			│
-│    Node     │              │			│
-└──────┬──────┘              │			│
-       │                     │			│
+│    Node     │							            │
+└──────┬──────┘							            │
+       │								                │
+       ├─────────────────────┐			    │
+       │                     │			    │
+   qa_passed            qa_failed		    │
+       │                     │			    │
+       ▼                     │			    │
+┌─────────────┐              │			    │
+│     EDA     │              │			    │
+│    Node     │              │			    │
+└──────┬──────┘              │			    │
+       │                     │			    │
        └─────────┬───────────┴──────────┘
                  ▼
           ┌─────────────┐
