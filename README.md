@@ -18,57 +18,17 @@ An intelligent data cleaning and quality assurance agent built with LangGraph. F
 
 ### LangGraph State Flow
 
-```
-┌─────────────┐
-│   START     │
-└──────┬──────┘
-       │
-       ▼
-┌─────────────┐
-│  Profiler   │
-│    Node     │
-└──────┬──────┘
-       │ cleaning_plan
-       ▼
-┌─────────────┐
-│   Coder     │◀────────────────────────┐
-│    Node     │               			│
-└──────┬──────┘               			│
-       │ generated_code       			│
-       ▼                      			│
-┌─────────────┐               			│ execution_error
-│  Executor   │               			│
-│    Node     │               			│
-└──────┬──────┘               			│
-       │                		retry_count < 3 
-       │                      			│
-       ├────────────────────────────────┘
-       │
-       ├────────────────────────────────┐
-       │                                │
-    success                    retry_count >= 3
-       │                                │
-       ▼                                │
-┌─────────────┐                         │
-│     QA      │                         │
-│    Node     │							│
-└──────┬──────┘							│
-       │								│
-       ├─────────────────────┐			│
-       │                     │			│
-   qa_passed            qa_failed		│
-       │                     │			│
-       ▼                     │			│
-┌─────────────┐              │			│
-│     EDA     │              │			│
-│    Node     │              │			│
-└──────┬──────┘              │			│
-       │                     │			│
-       └─────────┬───────────┴──────────┘
-                 ▼
-          ┌─────────────┐
-          │     END     │
-          └─────────────┘
+```mermaid
+flowchart TD
+    START([START]) --> Profiler[Profiler Node]
+    Profiler -->|cleaning_plan| Coder[Coder Node]
+    Coder -->|generated_code| Executor[Executor Node]
+    Executor -->|execution_error<br/>retry_count < 3| Coder
+    Executor -->|success| QA[QA Node]
+    Executor -->|retry_count >= 3| END([END])
+    QA -->|qa_passed| EDA[EDA Node]
+    QA -->|qa_failed| END
+    EDA --> END
 ```
 
 ### Core Nodes
